@@ -11,6 +11,7 @@ using Illusion.Game;
 namespace HS2_RandomHPicker
 {
     [BepInPlugin(nameof(HS2_RandomHPicker), nameof(HS2_RandomHPicker), VERSION)]
+    [BepInProcess("HoneySelect2")]
     public class HS2_RandomHPicker : BaseUnityPlugin
     {
         public const string VERSION = "1.0.0";
