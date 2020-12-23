@@ -6,6 +6,7 @@ This plugin adds random buttons for both the character selection and map selecti
 
 **Features:**  
 * Integrated into the game UI  
+* Random button for HS2DX Characters
 * Random button for Characters
 * Random button for Maps
 
