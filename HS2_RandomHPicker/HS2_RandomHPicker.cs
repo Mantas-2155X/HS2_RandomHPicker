@@ -6,6 +6,7 @@ using HarmonyLib;
 
 using HS2;
 using AIChara;
+using GameLoadCharaFileSystem;
 using Illusion.Game;
 
 namespace HS2_RandomHPicker
@@ -20,7 +21,7 @@ namespace HS2_RandomHPicker
         
         private static readonly List<LobbyCharaSelectInfoScrollController.ScrollData> validCharacters = new List<LobbyCharaSelectInfoScrollController.ScrollData>();
         private static readonly List<LobbyMapSelectInfoScrollController.ScrollData> validMaps = new List<LobbyMapSelectInfoScrollController.ScrollData>();
-        
+
         private void Awake() => Harmony.CreateAndPatchAll(typeof(Hooks), "HS2_RandomHPicker");
 
         public static void RandomCharacter(LobbySelectUI ___selectUI)
@@ -39,6 +40,26 @@ namespace HS2_RandomHPicker
 
             trav.Field("scrollCtrl").Method("OnValueChange", validCharacters[rand.Next(validCharacters.Count)], true).GetValue();
             trav.Field("scrollCtrl").Method("SetNowLine").GetValue();
+        }
+        
+        public static void RandomCharacterDX(object ___selectUI)
+        {
+            var trav = Traverse.Create(___selectUI);
+            
+            Utils.Sound.Play(SystemSE.ok_s);
+
+            if (___selectUI.GetType() == typeof(STRCharaSelectUI))
+            {
+                var datas = trav.Field("listCtrl").Field("scrollerDatas").GetValue<STRCharaFileScrollController.ScrollData[]>();
+                trav.Field("listCtrl").Method("OnValueChange", datas[rand.Next(datas.Length)], true).GetValue();
+            }
+            else
+            {
+                var datas = trav.Field("listCtrl").Field("scrollerDatas").GetValue<GameCharaFileScrollController.ScrollData[]>();
+                trav.Field("listCtrl").Method("OnValueChange", datas[rand.Next(datas.Length)], true).GetValue();
+            }
+            
+            trav.Field("listCtrl").Method("SetNowLine").GetValue();
         }
 
         public static void RandomMap(LobbyMapSelectUI ___mapSelectUI)
