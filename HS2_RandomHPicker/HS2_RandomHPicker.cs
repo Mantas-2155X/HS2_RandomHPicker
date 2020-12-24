@@ -6,8 +6,8 @@ using HarmonyLib;
 
 using HS2;
 using AIChara;
-using GameLoadCharaFileSystem;
 using Illusion.Game;
+using GameLoadCharaFileSystem;
 
 namespace HS2_RandomHPicker
 {
